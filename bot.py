@@ -26,7 +26,7 @@ from telegram.ext import (
 )
 
 # ==================== الإعدادات ====================
-BOT_TOKEN   = "8095849338:AAHK4EyZU0PM0zJqvdZe5Y7UlY3CjHwwr20"   # ← التوكن الجديد من @BotFather
+BOT_TOKEN   = "8095849338:AAFRFLiVl27Nvzyx0VOG69FtneFHVYUO4HE"   # ← التوكن الجديد من @BotFather
 ADMIN_ID    = 5279238199                       # ← ID حسابك
 SITE_URL    = "https://roaring-starburst-71e2e9.netlify.app/"     # ← رابط الموقع
 API_PORT    = 5000
