@@ -1,0 +1,32 @@
+# ============================================
+# Render.com Deployment Configuration
+# ============================================
+
+services:
+  - type: web
+    name: ads-reward-pro
+    env: static
+    region: oregon
+    buildCommand: |
+      cd client && npm install && npm run build
+    staticPublishPath: client/dist
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+  - type: web
+    name: ads-reward-api
+    env: node
+    region: oregon
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
