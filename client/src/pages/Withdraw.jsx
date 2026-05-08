@@ -9,6 +9,7 @@ export default function Withdraw() {
     const [info, setInfo] = useState(null);
     const [history, setHistory] = useState([]);
     const t = (key) => getTranslation(user?.language || 'ar', key);
+    const language = user?.language || 'ar';
 
     useEffect(() => {
         loadInfo();
@@ -162,5 +163,3 @@ export default function Withdraw() {
         </div>
     );
 }
-
-const language = 'ar';

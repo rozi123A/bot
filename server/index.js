@@ -14,15 +14,23 @@ app.use(express.json());
 
 // Database Pool
 let pool = null;
-try {
-    if (process.env.DATABASE_URL) {
-        pool = mysql.createPool(process.env.DATABASE_URL);
-        app.set('db', pool);
-        console.log('✅ Database pool created');
+async function initDB() {
+    try {
+        if (process.env.DATABASE_URL) {
+            pool = mysql.createPool(process.env.DATABASE_URL);
+            app.set('db', pool);
+            console.log('✅ Database pool created');
+
+            // Test connection
+            const conn = await pool.getConnection();
+            conn.release();
+            console.log('✅ Database connection verified');
+        }
+    } catch (e) {
+        console.error('❌ Database error:', e.message);
     }
-} catch (e) {
-    console.error('❌ Database error:', e.message);
 }
+initDB();
 
 // API Routes
 app.use('/api/auth', require('./routes/auth'));
