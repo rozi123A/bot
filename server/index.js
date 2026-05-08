@@ -53,6 +53,19 @@ app.get('/health', (req, res) => {
 
 // Serve static files from client/dist
 const distPath = path.join(__dirname, '../client/dist');
+const fs = require('fs');
+
+if (!fs.existsSync(distPath)) {
+    console.log('⚠️ client/dist not found, attempting to build...');
+    const { execSync } = require('child_process');
+    try {
+        execSync('cd ' + path.join(__dirname, '../client') + ' && npm install && npm run build', { stdio: 'inherit' });
+        console.log('✅ Frontend built successfully');
+    } catch (e) {
+        console.error('❌ Build failed:', e.message);
+    }
+}
+
 app.use(express.static(distPath));
 
 // API catch-all
