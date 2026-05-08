@@ -11,7 +11,7 @@ export const translations = {
             title: 'عجلة الحظ', spin: 'دور!', spinning: 'جاري الدوران...', noSpins: 'لا توجد لفائيات!', sectors: 'القطاعات',
             prizes: { 50: '50', 75: '75', 100: '100', 150: '150', 200: '200', 250: '250', 500: '500', 1000: '1000' }
         },
-        gift: { title: 'الهدية اليومية', claim: 'احصل على هديتك!', claimed: 'تمClaim!', available: 'متاحة الآن!', wait: 'متاحة بعد' },
+        gift: { title: 'الهدية اليومية', claim: 'احصل على هديتك!', claimed: 'تم!', available: 'متاحة الآن!', wait: 'متاحة بعد' },
         withdraw: {
             title: 'السحب', request: 'طلب سحب', amount: 'المبلغ', points: 'نقطة', stars: 'نجمة', history: 'سجل السحوبات',
             status: { pending: 'قيد المراجعة', approved: 'تمت الموافقة', rejected: 'مرفوض' }, insufficient: 'الرصيد غير كافٍ', minRequired: 'الحد الأدنى'
