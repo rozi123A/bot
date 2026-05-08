@@ -3,8 +3,8 @@ import { useApp } from '../context/AppContext';
 import { getTranslation } from '../i18n/translations';
 
 export default function Home() {
-    const { user, refreshProfile, showToast } = useApp();
-    const t = (key) => getTranslation(user?.language || 'ar', key);
+    const { user, refreshProfile, showToast, language } = useApp();
+    const t = (key) => getTranslation(language, key);
 
     if (!user) return null;
 
@@ -68,5 +68,3 @@ export default function Home() {
         </div>
     );
 }
-
-const language = 'ar';
