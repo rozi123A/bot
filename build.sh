@@ -4,10 +4,10 @@
 echo "📦 Installing server dependencies..."
 cd server && npm install
 
-echo "📦 Installing client dependencies..."
-cd ../client && npm install
+echo "📦 Installing client dependencies (including devDependencies)..."
+cd ../client && npm install --include=dev
 
-echo "🔨 Building client..."
-npm run build
+echo "🔨 Building client with npx..."
+npx vite build
 
 echo "✅ Build complete!"
