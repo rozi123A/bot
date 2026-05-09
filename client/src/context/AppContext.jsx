@@ -27,6 +27,7 @@ export const AppProvider = ({ children }) => {
             }
 
             const tgUser = window.Telegram.WebApp.initDataUnsafe.user;
+            const tgInitData = window.Telegram.WebApp.initData;
             const lang = localStorage.getItem('language') || tgUser.language_code || 'ar';
 
             // Map language codes
@@ -35,6 +36,7 @@ export const AppProvider = ({ children }) => {
             setLanguage(finalLang);
 
             const response = await axios.post(`${API_URL}/api/auth/login`, {
+                initData: tgInitData,
                 telegram_id: tgUser.id,
                 username: tgUser.username || '',
                 first_name: tgUser.first_name,
