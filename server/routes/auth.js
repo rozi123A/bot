@@ -1,12 +1,53 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+
+function validateTelegramInitData(initData, botToken) {
+    try {
+        if (!initData || !botToken) return true; // Skip validation if no data
+
+        const params = new URLSearchParams(initData);
+        const hash = params.get('hash');
+        params.delete('hash');
+
+        const dataCheckString = Array.from(params.entries())
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([key, value]) => `${key}=${value}`)
+            .join('\n');
+
+        const secretKey = crypto
+            .createHmac('sha256', 'WebAppData')
+            .update(botToken)
+            .digest();
+
+        const calculatedHash = crypto
+            .createHmac('sha256', secretKey)
+            .update(dataCheckString)
+            .digest('hex');
+
+        return calculatedHash === hash;
+    } catch (e) {
+        console.error('Validation error:', e.message);
+        return false;
+    }
+}
 
 router.post('/login', async (req, res) => {
     try {
-        const { telegram_id, username, first_name, last_name, language } = req.body;
+        const { initData, telegram_id, username, first_name, last_name, language } = req.body;
         const pool = req.app.get('db');
         const connection = await pool.getConnection();
+
+        // Validate initData if provided (Telegram Mini App)
+        if (initData && process.env.BOT_TOKEN) {
+            const isValid = validateTelegramInitData(initData, process.env.BOT_TOKEN);
+            if (!isValid) {
+                connection.release();
+                console.log('❌ Invalid initData from user:', telegram_id);
+                return res.status(401).json({ error: 'Invalid token' });
+            }
+        }
 
         let [users] = await connection.query(
             'SELECT * FROM users WHERE telegram_id = ?',
@@ -30,13 +71,11 @@ router.post('/login', async (req, res) => {
                 [telegram_id]
             );
 
-            // Log signup activity
             await connection.query(
                 'INSERT INTO activities (user_id, type, details, points) VALUES (?, ?, ?, ?)',
                 [users[0].id, 'signup', 'New user registered', 0]
             );
         } else {
-            // Update language if provided
             if (language) {
                 await connection.query('UPDATE users SET language = ? WHERE id = ?', [language, users[0].id]);
                 users[0].language = language;
@@ -46,7 +85,6 @@ router.post('/login', async (req, res) => {
         const user = users[0];
         connection.release();
 
-        // Generate JWT
         const token = jwt.sign(
             { id: user.id, telegram_id: user.telegram_id },
             process.env.JWT_SECRET,
