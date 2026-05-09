@@ -22,7 +22,7 @@ export const translations = {
             languages: { ar: 'العربية', en: 'English', ru: 'Русский' }
         },
         errors: { generic: 'حدث خطأ', network: 'خطأ في الاتصال', unauthorized: 'غير مصرح' },
-        success: { copied: 'تم النسخ!', claimed: 'تم الاستلام!', reset: 'تم التصفير!'
+        success: { copied: 'تم النسخ!', claimed: 'تم الاستلام!', reset: 'تم التصفير!' }
     },
     en: {
         app: { name: 'Ads Reward Pro', loading: 'Loading...' },
@@ -47,7 +47,7 @@ export const translations = {
             languages: { ar: 'العربية', en: 'English', ru: 'Русский' }
         },
         errors: { generic: 'An error occurred', network: 'Connection error', unauthorized: 'Unauthorized' },
-        success: { copied: 'Copied!', claimed: 'Claimed!', reset: 'Reset!'
+        success: { copied: 'Copied!', claimed: 'Claimed!', reset: 'Reset!' }
     },
     ru: {
         app: { name: 'Ads Reward Pro', loading: 'Загрузка...' },
@@ -72,7 +72,7 @@ export const translations = {
             languages: { ar: 'العربية', en: 'English', ru: 'Русский' }
         },
         errors: { generic: 'Произошла ошибка', network: 'Ошибка соединения', unauthorized: 'Не авторизован' },
-        success: { copied: 'Скопировано!', claimed: 'Получено!', reset: 'Сброшено!'
+        success: { copied: 'Скопировано!', claimed: 'Получено!', reset: 'Сброшено!' }
     }
 };
 
